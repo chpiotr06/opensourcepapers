@@ -1,23 +1,27 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import type { UserData } from '@/api/types/api.Register'
+import type { NextRequest } from 'next/server'
 
-export async function GET() {
+export async function POST(req: NextRequest) {
   const cookieStore = cookies()
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+  const body = (await req.json()) as UserData
 
   const { data, error } = await supabase.auth.signUp({
-    email: 'piotrchmielowiec.tbg.70@gmail.com',
-    password: 'Letplaywot123',
+    email: body.email,
+    password: body.password,
     options: {
       data: {
-        name: 'Piotr',
-        surname: 'Chmielowiec',
+        name: body.name,
+        surname: body.surname,
       },
     },
   })
+  if (error) {
+    return NextResponse.json({ error }, { status: 400 })
+  }
 
-  console.log(data, error)
-
-  return NextResponse.json({})
+  return NextResponse.json({ data }, { status: 201 })
 }

@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google'
+import TanstackQueryProvider from '@/components/providers/tanstack-query-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
@@ -15,10 +16,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <TanstackQueryProvider>
+          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </TanstackQueryProvider>
       </body>
     </html>
   )
