@@ -11,7 +11,7 @@ export const formSchema = z
       .min(2, { message: 'Nazwisko musi mieć co najmniej dwa znaki' })
       .max(25, { message: 'Nazwisko moze mieć co najwyżej 25 znaków' }),
     email: z.string().email('Nie podano poprawnego adresu email'),
-    password: z.string().min(2, { message: 'Hasło musi mieć co najmniej 6 znaków' }),
+    password: z.string().min(6, { message: 'Hasło musi mieć co najmniej 6 znaków' }),
     confirmPassword: z.string(),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
