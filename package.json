@@ -12,7 +12,8 @@
     "format-all": "npm run prettier-format && npm run eslint-format",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
-    "check-lint": "eslint . --ext ts --ext tsx --ext js --ext json"
+    "check-lint": "eslint . --ext ts --ext tsx --ext js --ext json",
+    "update-db": "npx supabase gen types typescript --project-id \"fkhkljgmvruluwbiodpp\" --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -32,6 +33,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
+    "supabase": "^1.112.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

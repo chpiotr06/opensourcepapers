@@ -4,6 +4,7 @@ export const endpoints = {
   user: {
     register: '/register',
     scientificRegister: '/scientific-register',
+    usersToVerify: '/users-to-verify',
     login: '/login',
   },
 }
