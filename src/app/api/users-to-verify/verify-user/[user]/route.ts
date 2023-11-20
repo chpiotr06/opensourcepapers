@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
 
-export async function GET() {
+export async function POST(request: Request, { params }: { params: { user: string } }) {
+  const userId = params.user
   const supabase = createRouteSupa()
   const { data: userData } = await supabase.auth.getUser()
   if (!userData || !userData.user) {
@@ -16,12 +17,13 @@ export async function GET() {
     return NextResponse.json({ message: 'Resource forbidden' }, { status: 403 })
   }
 
-  const { data } = await supabase
-    .from('profiles')
-    .select('id, name, surname, scientific_profile_id, scientific_profiles(degree, institution, scientific_discipline)')
-    .not('scientific_profile_id', 'is', null)
-    .not('scientific_profiles', 'is', null)
-    .is('scientific_profiles.is_verified', false)
+  const { data, error } = await supabase
+    .from('scientific_profiles')
+    .update({ is_verified: true })
+    .eq('id', userId)
+    .select()
+
+  if (error) return NextResponse.json({ message: error }, { status: 500 })
 
   return NextResponse.json({ data })
 }
