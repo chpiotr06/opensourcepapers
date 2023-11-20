@@ -1,3 +1,9 @@
+import { UsersToVerifyTable } from '@/components/features/admin/users-to-verify'
+
 export default function Page() {
-  return <div>Admin Page</div>
+  return (
+    <div>
+      <UsersToVerifyTable />
+    </div>
+  )
 }
