@@ -10,11 +10,16 @@ import { cn } from '@/lib/utils'
 
 const MAX_FILE_SIZE = 30_000_000
 
-export const FileDragAndDrop = () => {
+type FileDragAndDropProps = {
+  folderName: string
+  fileName: string
+}
+
+export const FileDragAndDrop = ({ folderName, fileName }: FileDragAndDropProps) => {
   const { toast } = useToast()
   const supabase = createClient()
   const onDropHandler = async (acceptedFile: File[]) => {
-    const { error } = await supabase.storage.from('example_bucket').upload('test/testFile.pdf', acceptedFile[0])
+    const { error } = await supabase.storage.from('example_bucket').upload(`${folderName}/${fileName}`, acceptedFile[0])
     if (!error) {
       toast({
         variant: 'success',
@@ -42,16 +47,16 @@ export const FileDragAndDrop = () => {
       <div
         {...getRootProps()}
         className={cn(
-          'border-main-500 bg-main-200 flex h-20 w-full flex-col items-center justify-center rounded border border-dashed',
+          'flex w-full flex-col items-center justify-center gap-3 rounded border border-dashed border-foreground py-4 hover:border-primary',
           {
-            'border-dominant': isFocused || isFileDialogActive || isDragActive,
+            'border-primary': isFocused || isFileDialogActive || isDragActive,
           }
         )}
       >
         <input {...getInputProps()} />
         <Upload />
         <Typography variant='p-12-400' className='text-main-600'>
-          Przeciągnij i upuść plik lub<span className='text-dominant'>wyszukaj</span>
+          Przeciągnij i upuść plik lub <span className='text-dominant'>wyszukaj</span>
         </Typography>
         <Typography variant='p-10-400' className='text-main-600'>
           Maksymalny rozmiar to 30 MB

@@ -38,84 +38,101 @@ export const ArticleForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Card className='h-fit w-96'>
-          <CardHeader>
-            <CardTitle>Podstawowe informacje</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name='title'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tytuł</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Podaj tytuł' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='authors'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Autorzy</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Podaj autorów po przecinku' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='discipline'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dyscyplina naukowa</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Podaj dyscypline' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='desc'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Krótki opis</FormLabel>
-                  <FormControl>
-                    <Textarea className='min-h-[8rem]' placeholder='Podaj tytuł' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
-        <Card className='h-fit w-96'>
-          <CardHeader>
-            <CardTitle>Dodaj pliki</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <FileDragAndDrop />
-            <FileDragAndDrop />
-            <FileDragAndDrop />
-          </CardContent>
-        </Card>
-        <Card className='h-fit w-96'>
-          <CardHeader>
-            <CardTitle>Streszczenie</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Textarea></Textarea>
-          </CardContent>
-        </Card>
-        <Button type='submit'>Dodaj Pracę do oceny</Button>
+        <div className='mx-6 mb-6 flex flex-col gap-6'>
+          <div className='grid grid-cols-1 items-center gap-10 lg:grid-cols-2'>
+            <Card className='h-full w-full'>
+              <CardHeader>
+                <CardTitle>Podstawowe informacje</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name='title'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tytuł</FormLabel>
+                      <FormControl>
+                        <Input placeholder='Podaj tytuł' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='authors'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Autorzy</FormLabel>
+                      <FormControl>
+                        <Input placeholder='Podaj autorów po przecinku' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='discipline'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Dyscyplina naukowa</FormLabel>
+                      <FormControl>
+                        <Input placeholder='Podaj dyscypline' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='desc'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Krótki opis</FormLabel>
+                      <FormControl>
+                        <Textarea className='min-h-[8rem]' placeholder='Podaj tytuł' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+            <Card className='h-full w-full'>
+              <CardHeader>
+                <CardTitle>Dodaj pliki</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
+                  <div className='mt-3 flex flex-col gap-1'>
+                    <div>Praca naukowa</div>
+                    <FileDragAndDrop folderName='articles' fileName='article-test' />
+                  </div>
+                  <div className='mt-3 flex flex-col gap-1'>
+                    <div>Praca naukowa bez danych osobowych</div>
+                    <FileDragAndDrop folderName='no-data-articles' fileName='no-data-article-test' />
+                  </div>
+                  <div className='mt-3 flex flex-col gap-1'>
+                    <div>Grafika</div>
+                    <FileDragAndDrop folderName='article-images' fileName='article-images-test' />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <Card className='h-fit'>
+            <CardHeader>
+              <CardTitle>Streszczenie</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea></Textarea>
+            </CardContent>
+          </Card>
+          <Button type='submit' className='w-fit'>
+            Dodaj Pracę do oceny
+          </Button>
+        </div>
       </form>
     </Form>
   )
