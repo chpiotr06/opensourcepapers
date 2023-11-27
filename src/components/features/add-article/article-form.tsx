@@ -1,6 +1,8 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import dynamic from 'next/dynamic'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
@@ -9,17 +11,21 @@ import { FileDragAndDrop } from '@/components/ui/file-dnd'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import 'react-quill/dist/quill.snow.css'
 
 const formSchema = z.object({
   title: z.string(),
   authors: z.string(),
   discipline: z.string(),
   desc: z.string(),
-  abstract: z.string(),
 })
 type FormSchema = z.infer<typeof formSchema>
 
 export const ArticleForm = () => {
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), [])
+
+  const [quillValue, setQuillValue] = useState('')
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,7 +33,6 @@ export const ArticleForm = () => {
       authors: '',
       discipline: '',
       desc: '',
-      abstract: '',
     },
   })
 
@@ -44,7 +49,7 @@ export const ArticleForm = () => {
               <CardHeader>
                 <CardTitle>Podstawowe informacje</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className='flex flex-col gap-2'>
                 <FormField
                   control={form.control}
                   name='title'
@@ -126,7 +131,7 @@ export const ArticleForm = () => {
               <CardTitle>Streszczenie</CardTitle>
             </CardHeader>
             <CardContent>
-              <Textarea></Textarea>
+              <ReactQuill theme='snow' value={quillValue} onChange={setQuillValue} />
             </CardContent>
           </Card>
           <Button type='submit' className='w-fit'>
