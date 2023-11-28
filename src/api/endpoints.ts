@@ -8,4 +8,7 @@ export const endpoints = {
     verifyUser: (id: string) => `/users-to-verify/verify-user/${id}`,
     login: '/login',
   },
+  articles: {
+    addArticle: '/articles/add-article',
+  },
 }

@@ -3,6 +3,62 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
+      articles: {
+        Row: {
+          abstract: string
+          article_no_personal_url: string
+          article_url: string
+          author: string
+          co_authors: string | null
+          created_at: string
+          discipline: string
+          id: string
+          image_url: string
+          is_reviewd: boolean
+          short_desc: string
+          title: string
+          uploader_id: string
+        }
+        Insert: {
+          abstract: string
+          article_no_personal_url: string
+          article_url: string
+          author: string
+          co_authors?: string | null
+          created_at?: string
+          discipline: string
+          id?: string
+          image_url: string
+          is_reviewd?: boolean
+          short_desc: string
+          title: string
+          uploader_id: string
+        }
+        Update: {
+          abstract?: string
+          article_no_personal_url?: string
+          article_url?: string
+          author?: string
+          co_authors?: string | null
+          created_at?: string
+          discipline?: string
+          id?: string
+          image_url?: string
+          is_reviewd?: boolean
+          short_desc?: string
+          title?: string
+          uploader_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'articles_uploader_id_fkey'
+            columns: ['uploader_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -41,6 +97,57 @@ export interface Database {
             columns: ['scientific_profile_id']
             isOneToOne: false
             referencedRelation: 'scientific_profiles'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          article_id: string
+          author: string
+          co_authors: string | null
+          created_at: string
+          description: string
+          id: string
+          review_url: string
+          title: string
+          uploader_id: string
+        }
+        Insert: {
+          article_id: string
+          author: string
+          co_authors?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          review_url: string
+          title: string
+          uploader_id: string
+        }
+        Update: {
+          article_id?: string
+          author?: string
+          co_authors?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          review_url?: string
+          title?: string
+          uploader_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'reviews_article_id_fkey'
+            columns: ['article_id']
+            isOneToOne: false
+            referencedRelation: 'articles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'reviews_uploader_id_fkey'
+            columns: ['uploader_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
             referencedColumns: ['id']
           },
         ]
