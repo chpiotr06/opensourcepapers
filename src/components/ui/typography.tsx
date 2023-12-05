@@ -3,6 +3,10 @@ import { twMerge } from 'tailwind-merge'
 
 /** Variant names should be kept in the format: element-fontSize-fontWeight-fontStyle */
 const variants = {
+  'h1-30-500': {
+    defaultTag: 'h1',
+    classes: 'text-3xl text-main-500',
+  },
   'h1-20-500': {
     defaultTag: 'h1',
     classes: 'text-xl text-main-500',
