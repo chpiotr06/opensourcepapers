@@ -18,11 +18,11 @@ import 'react-quill/dist/quill.snow.css'
 import { useToast } from '@/components/ui/use-toast'
 
 const formSchema = z.object({
-  title: z.string(),
-  author: z.string(),
+  title: z.string().min(2, { message: 'Musisz podać tytuł' }),
+  author: z.string().min(2, { message: 'Musisz podać autora' }),
   coAuthors: z.string(),
-  discipline: z.string(),
-  shortDesc: z.string(),
+  discipline: z.string().min(2, { message: 'Musisz podać dyscyplinę' }),
+  shortDesc: z.string().min(2, { message: 'Musisz podać opis pracy' }),
 })
 type FormSchema = z.infer<typeof formSchema>
 
@@ -67,13 +67,23 @@ export const ArticleForm = () => {
 
   const onSubmit = (values: FormSchema) => {
     if (articleUid !== undefined || noDataArticleUid !== undefined || imageUid !== undefined) {
-      mutate({
-        ...values,
-        abstract: quillValue,
-        articleUrl: `articles/${articleUid}`,
-        articleNoPersonalUrl: `no-data-articles/${noDataArticleUid}`,
-        imageUrl: `article-images/${imageUid}`,
-      })
+      if (quillValue) {
+        mutate({
+          ...values,
+          abstract: quillValue,
+          articleUrl: `articles/${articleUid}`,
+          articleNoPersonalUrl: `no-data-articles/${noDataArticleUid}`,
+          imageUrl: `article-images/${imageUid}`,
+        })
+      } else {
+        toast({
+          variant: 'destructive',
+          duration: 5000,
+          title: 'Ups! Coś poszło nie tak',
+          description:
+            'Dodaj streszenie pracy i spróbuj jeszcze raz. Jesli problem bedzie się powtarzał, skontaktuj się z nami',
+        })
+      }
     } else {
       toast({
         variant: 'destructive',
@@ -88,7 +98,7 @@ export const ArticleForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className='mx-6 mb-6 flex flex-col gap-6'>
+        <div className='flex flex-col gap-6'>
           <div className='grid grid-cols-1 items-center gap-10 lg:grid-cols-2'>
             <Card className='h-full w-full'>
               <CardHeader>
@@ -164,7 +174,7 @@ export const ArticleForm = () => {
             </Card>
             <Card className='h-full w-full'>
               <CardHeader>
-                <CardTitle>Dodaj pliki</CardTitle>
+                <CardTitle>Pliki</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
@@ -196,7 +206,7 @@ export const ArticleForm = () => {
               <ReactQuill theme='snow' value={quillValue} onChange={setQuillValue} />
             </CardContent>
           </Card>
-          <Button disabled={isSuccess} type='submit'>
+          <Button disabled={isSuccess} type='submit' className='w-fit'>
             {!isPending ? 'Dodaj pracę do systemu' : <Loader2 className='animate-spin' />}
           </Button>
         </div>
