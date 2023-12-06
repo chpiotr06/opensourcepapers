@@ -62,11 +62,7 @@ export function DataTable({ columns, data }: DataTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  className='even:bg-primary-100 hover:bg-primary-200'
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className='my-4 whitespace-nowrap' key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -77,7 +73,7 @@ export function DataTable({ columns, data }: DataTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className='h-24 text-center'>
-                  No results.
+                  Brak wyników
                 </TableCell>
               </TableRow>
             )}

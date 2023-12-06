@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useRegisterMutation } from '@/api/hooks/useRegisterMutation'
 import { formSchema } from '@/components/features/register/formSchema'
@@ -7,12 +8,14 @@ import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { appRouting } from '@/lib/app-routing'
 import type * as z from 'zod'
 
 type FormSchema = z.infer<typeof formSchema>
 
 export const RegisterForm = () => {
   const { toast } = useToast()
+  const router = useRouter()
   const { mutate, isSuccess, isPending } = useRegisterMutation(
     () =>
       toast({
@@ -22,13 +25,15 @@ export const RegisterForm = () => {
         description:
           'Sprawdź poprawność danych i spróbuj jeszcze raz. Jesli problem bedzie się powtarzał, skontaktuj się z nami',
       }),
-    () =>
+    () => {
       toast({
         variant: 'success',
         duration: 5000,
         title: 'Konto utworzone',
         description: 'Sprawdź maila aby potwierdzić konto',
       })
+      router.push(appRouting.articles.default)
+    }
   )
 
   const form = useForm<FormSchema>({

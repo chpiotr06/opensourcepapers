@@ -1,5 +1,9 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useLoginUserMutation } from '@/api/hooks/useLoginUserMutation'
 import type { FormSchema } from '@/components/features/login/formSchema'
@@ -8,9 +12,12 @@ import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
+import { appRouting } from '@/lib/app-routing'
 
 export const LoginForm = () => {
   const { toast } = useToast()
+  const router = useRouter()
+  const queryClient = useQueryClient()
   const { mutate, isSuccess, isPending } = useLoginUserMutation(
     () =>
       toast({
@@ -20,12 +27,15 @@ export const LoginForm = () => {
         description:
           'Sprawdź poprawność danych i spróbuj jeszcze raz. Jesli problem bedzie się powtarzał, skontaktuj się z nami',
       }),
-    () =>
+    () => {
       toast({
         variant: 'success',
         duration: 5000,
         title: 'Zalogowano poprawnie',
       })
+      queryClient.invalidateQueries({ queryKey: ['usersDetails'] })
+      router.push(appRouting.articles.default)
+    }
   )
 
   const form = useForm<FormSchema>({

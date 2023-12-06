@@ -7,6 +7,8 @@ export const endpoints = {
     usersToVerify: '/users-to-verify',
     verifyUser: (id: string) => `/users-to-verify/verify-user/${id}`,
     login: '/login',
+    logout: '/signout',
+    userDetails: '/user-details',
   },
   articles: {
     addArticle: '/articles/add-article',
