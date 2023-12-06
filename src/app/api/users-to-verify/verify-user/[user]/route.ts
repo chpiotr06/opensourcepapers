@@ -13,17 +13,19 @@ export async function POST(request: Request, { params }: { params: { user: strin
   if (!validationData) {
     return NextResponse.json({ message: 'Resource not Found' }, { status: 404 })
   }
-  if (validationData[0].role != 'admin') {
+  if (validationData[0].role !== 'admin') {
     return NextResponse.json({ message: 'Resource forbidden' }, { status: 403 })
   }
 
-  const { data, error } = await supabase
+  const { data, error: errorOne } = await supabase
     .from('scientific_profiles')
     .update({ is_verified: true })
     .eq('id', userId)
     .select()
+  if (errorOne) return NextResponse.json({ message: errorOne }, { status: 500 })
 
-  if (error) return NextResponse.json({ message: error }, { status: 500 })
+  const { error: errorTwo } = await supabase.from('profiles').update({ role: 'scientist' }).eq('id', userId).select()
+  if (errorTwo) return NextResponse.json({ message: errorOne }, { status: 500 })
 
   return NextResponse.json({ data })
 }

@@ -19,7 +19,7 @@ export function ThemeToggle() {
           <span className='sr-only'>Zmiana języka</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='center' className='drop-shadow-dropdown bg-main-300'>
+      <DropdownMenuContent align='center'>
         <DropdownMenuItem onClick={() => setTheme('light')}>Jasny Motyw</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')}>Ciemny Motyw</DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('system')}>Motyw Systemowy</DropdownMenuItem>

@@ -18,11 +18,11 @@ export const TablePagination = ({ table }: { table: Table<UserToVerify> }) => {
         <ChevronLeft />
       </Button>
       <Typography variant='p-12-400'>
-        Page
+        Strona
         <span className='rounded-xs bg-main-300 mx-1 p-[3px]'>
           {totalRows > 0 ? table.getState().pagination.pageIndex + 1 : 0}
         </span>
-        of {table.getPageCount()}
+        z {table.getPageCount()}
       </Typography>
       <Button variant='link' className='p-0' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
         <ChevronRight />
