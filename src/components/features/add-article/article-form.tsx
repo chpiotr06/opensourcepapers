@@ -31,9 +31,14 @@ export const ArticleForm = () => {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), [])
   const router = useRouter()
 
-  const [articleUid, setArticleUid] = useState(uuid())
-  const [noDataArticleUid, setNoDataArticleUid] = useState(uuid())
-  const [imageUid, setImageUid] = useState(uuid())
+  const [articleUid] = useState(uuid())
+  const [articleFile, setArticleFile] = useState<File | null>(null)
+
+  const [noDataArticleUid] = useState(uuid())
+  const [noDataArticleFile, setNoDataArticleFile] = useState<File | null>(null)
+
+  const [imageUid] = useState(uuid())
+  const [imageFile, setImageFile] = useState<File | null>(null)
 
   const [quillValue, setQuillValue] = useState('')
 
@@ -70,7 +75,7 @@ export const ArticleForm = () => {
   })
 
   const onSubmit = (values: FormSchema) => {
-    if (articleUid !== undefined || noDataArticleUid !== undefined || imageUid !== undefined) {
+    if (imageFile !== null || articleFile !== null || noDataArticleFile !== null) {
       if (quillValue) {
         mutate({
           ...values,
@@ -184,19 +189,30 @@ export const ArticleForm = () => {
                 <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
                   <div className='mt-3 flex flex-col gap-1'>
                     <div>Praca naukowa</div>
-                    <FileDragAndDrop folderName='articles' fileName={articleUid} setUid={setArticleUid} />
+                    <FileDragAndDrop
+                      folderName='articles'
+                      fileName={articleUid}
+                      file={articleFile}
+                      setFile={setArticleFile}
+                    />
                   </div>
                   <div className='mt-3 flex flex-col gap-1'>
                     <div>Praca naukowa bez danych osobowych</div>
                     <FileDragAndDrop
                       folderName='no-data-articles'
                       fileName={noDataArticleUid}
-                      setUid={setNoDataArticleUid}
+                      file={noDataArticleFile}
+                      setFile={setNoDataArticleFile}
                     />
                   </div>
                   <div className='mt-3 flex flex-col gap-1'>
                     <div>Grafika</div>
-                    <FileDragAndDrop folderName='article-images' fileName={imageUid} setUid={setImageUid} />
+                    <FileDragAndDrop
+                      folderName='article-images'
+                      fileName={imageUid}
+                      file={imageFile}
+                      setFile={setImageFile}
+                    />
                   </div>
                 </div>
               </CardContent>

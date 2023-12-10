@@ -12,5 +12,6 @@ export const endpoints = {
   },
   articles: {
     addArticle: '/articles/add-article',
+    getReviewedArticle: '/articles/get-reviewed-articles',
   },
 }
