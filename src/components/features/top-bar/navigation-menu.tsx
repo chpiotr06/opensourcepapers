@@ -18,13 +18,13 @@ export function NavMenu({ role, mail }: { role: string | undefined; mail: string
           <ul className='grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
             <li className='row-span-3'>
               <DropdownMenuItem>
-                <a
+                <Link
                   className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'
                   href='/'
                 >
                   <div className='mb-2 mt-4 text-lg font-medium'>Strona główna</div>
                   <p className='text-sm leading-tight text-muted-foreground'>Darmowy dostęp do prac naukowych</p>
-                </a>
+                </Link>
               </DropdownMenuItem>
             </li>
             <DropdownMenuItem title='Przeglądaj'>
@@ -32,12 +32,12 @@ export function NavMenu({ role, mail }: { role: string | undefined; mail: string
             </DropdownMenuItem>
             {(role === 'admin' || role === 'scientist') && (
               <>
-                <DropdownMenuItem title='Dodaj recenzję'>
-                  <Link href='/articles/add-article'>Dodaj pracę naukową do naszej bazy</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem title='Do recenzji'>
-                  <Link href='/articles/to-review'>Przeglądaj listę prac które wymagają recenzji</Link>
-                </DropdownMenuItem>
+                <Link href='/articles/add-article'>
+                  <DropdownMenuItem title='Dodaj recenzję'>Dodaj pracę naukową do naszej bazy</DropdownMenuItem>
+                </Link>
+                <Link href='/articles/to-review'>
+                  <DropdownMenuItem title='Do recenzji'>Przeglądaj listę prac które wymagają recenzji</DropdownMenuItem>
+                </Link>
               </>
             )}
           </ul>
@@ -49,15 +49,15 @@ export function NavMenu({ role, mail }: { role: string | undefined; mail: string
             <Button variant='outline'>Zaloguj</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem title='Zaloguj sie'>
-              <Link href='/login'>Zaloguj sie do systemu</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem title='Zarejestruj się'>
-              <Link href='/register'>Utwórz konto zwykłego użytkownika</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href='/scientific-register'>Utwórz konto pracownika naukowego</Link>
-            </DropdownMenuItem>
+            <Link href='/login'>
+              <DropdownMenuItem title='Zaloguj sie'>Zaloguj sie do systemu</DropdownMenuItem>
+            </Link>
+            <Link href='/register'>
+              <DropdownMenuItem title='Zarejestruj się'>Utwórz konto zwykłego użytkownika</DropdownMenuItem>
+            </Link>
+            <Link href='/scientific-register'>
+              <DropdownMenuItem>Utwórz konto pracownika naukowego</DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )}
