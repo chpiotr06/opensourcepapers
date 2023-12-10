@@ -1,5 +1,5 @@
 'use client'
-import { useFetchUsersToVerify } from '@/api/hooks/useFetchUsersToVerify'
+import { useFetchUsersToVerify } from '@/api/hooks/admin/useFetchUsersToVerify'
 import { DataTable } from '@/components/features/admin/users-to-verify-table/data-table'
 import { useColumns } from '@/components/features/admin/users-to-verify-table/use-columns'
 

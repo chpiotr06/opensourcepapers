@@ -1,5 +1,5 @@
 'use client'
-import { useFetchReviewedArticles } from '@/api/hooks/useFetchReviewedArticles'
+import { useFetchReviewedArticles } from '@/api/hooks/articles/useFetchReviewedArticles'
 import { ArticleThumbnail } from '@/components/features/article-thumbnail/article-thumbnail'
 
 export default function ArticlesPage() {

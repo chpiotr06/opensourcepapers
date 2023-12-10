@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createColumnHelper } from '@tanstack/react-table'
-import { useVerifyUserMutation } from '@/api/hooks/useVerifyUserMutation'
+import { useVerifyUserMutation } from '@/api/hooks/admin/useVerifyUserMutation'
 import type { UserToVerify } from '@/api/types/api.UsersToVerify'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
