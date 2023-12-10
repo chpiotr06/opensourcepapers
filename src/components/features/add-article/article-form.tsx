@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { uuid } from 'uuidv4'
@@ -28,6 +29,7 @@ type FormSchema = z.infer<typeof formSchema>
 
 export const ArticleForm = () => {
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), [])
+  const router = useRouter()
 
   const [articleUid, setArticleUid] = useState(uuid())
   const [noDataArticleUid, setNoDataArticleUid] = useState(uuid())
@@ -45,13 +47,15 @@ export const ArticleForm = () => {
         description:
           'Sprawdź poprawność danych i spróbuj jeszcze raz. Jesli problem bedzie się powtarzał, skontaktuj się z nami',
       }),
-    () =>
+    () => {
       toast({
         variant: 'success',
         duration: 5000,
-        title: 'Konto utworzone',
+        title: 'Dodano pracę',
         description: 'Pracę umieszczono w systemie poprawnie',
       })
+      router.push('/')
+    }
   )
 
   const form = useForm<FormSchema>({
