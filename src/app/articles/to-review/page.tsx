@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { ArticlesToReviewList } from '@/components/features/articles-to-review-list/articles-to-review-list'
 import { appRouting } from '@/lib/app-routing'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
 
@@ -11,5 +12,9 @@ export default async function ToReviewPage() {
   if (validationData[0].role !== 'admin' && validationData[0].role !== 'scientist')
     redirect(appRouting.articles.default)
 
-  return <div>To Review</div>
+  return (
+    <div>
+      <ArticlesToReviewList />
+    </div>
+  )
 }

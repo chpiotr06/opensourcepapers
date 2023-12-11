@@ -2,9 +2,9 @@ import { useQuery, type QueryClient } from '@tanstack/react-query'
 import { API, endpoints } from '@/api/endpoints'
 import type { ArticleShortResponse } from '@/api/types/api.Articles'
 
-export const fetchReviewedArticles = async (): Promise<ArticleShortResponse> => {
+export const fetchArticlesToReview = async (): Promise<ArticleShortResponse> => {
   try {
-    const url = new URL(`${API}${endpoints.articles.getReviewedArticle}`)
+    const url = new URL(`${API}${endpoints.articles.getArticlesToReview}`)
 
     const response = await fetch(url.toString())
 
@@ -20,14 +20,14 @@ export const fetchReviewedArticles = async (): Promise<ArticleShortResponse> => 
   }
 }
 
-export const prefetchReviewedArticles = async (queryClient: QueryClient) => {
-  await queryClient.prefetchQuery({ queryKey: ['reviewedArticles'], queryFn: () => fetchReviewedArticles() })
+export const prefetchArticlesToReview = async (queryClient: QueryClient) => {
+  await queryClient.prefetchQuery({ queryKey: ['articlesToReview'], queryFn: () => fetchArticlesToReview() })
 }
 
-export const useFetchReviewedArticles = () => {
+export const useFetchArticlesToReview = () => {
   const { data, isError, error, refetch } = useQuery<ArticleShortResponse, Error>({
-    queryKey: ['reviewedArticles'],
-    queryFn: () => fetchReviewedArticles(),
+    queryKey: ['articlesToReview'],
+    queryFn: () => fetchArticlesToReview(),
     refetchOnWindowFocus: false,
     staleTime: 300_000,
   })
