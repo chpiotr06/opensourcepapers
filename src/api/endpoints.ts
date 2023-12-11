@@ -12,5 +12,8 @@ export const endpoints = {
   },
   articles: {
     addArticle: '/articles/add-article',
+    getReviewedArticle: '/articles/get-reviewed-articles',
+    getArticlesToReview: '/articles/get-articles-to-review',
+    getArticleDetails: (id: string) => `/articles/get-article-details/${id}`,
   },
 }

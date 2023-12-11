@@ -1,7 +1,5 @@
 import { Upload, X } from 'lucide-react'
-import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { uuid } from 'uuidv4'
 import { Typography } from '@/components/ui/typography'
 import { useToast } from '@/components/ui/use-toast'
 import { filesizeSuffix } from '@/helpers/filesizeSuffix'
@@ -15,23 +13,23 @@ type FileDragAndDropProps = {
   folderName: string
   fileName: string
   bucketName?: string
-  setUid: Dispatch<SetStateAction<string>>
+  file: File | null
+  setFile: Dispatch<SetStateAction<File | null>>
 }
 
 export const FileDragAndDrop = ({
   folderName,
   fileName,
   bucketName = 'public_bucket',
-  setUid,
+  file,
+  setFile,
 }: FileDragAndDropProps) => {
-  const [file, setFile] = useState<File | null>()
   const { toast } = useToast()
   const supabase = createClient()
   const onDropHandler = async (acceptedFile: File[]) => {
     setFile(acceptedFile[0])
     const { error } = await supabase.storage.from(bucketName).upload(`${folderName}/${fileName}`, acceptedFile[0])
     if (!error) {
-      setUid(uuid())
       toast({
         variant: 'success',
         duration: 5000,

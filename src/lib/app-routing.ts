@@ -7,7 +7,7 @@ export const appRouting = {
     toReview: '/articles/to-reviev',
     addArticle: '/articles/add-article',
     slug: (slug: string) => `/articles/${slug}`,
-    addReview: '/articles/add-review',
+    addReview: (articleId: string) => `/articles/add-review/${articleId}`,
   },
   search: '/search',
   admin: '/admin',

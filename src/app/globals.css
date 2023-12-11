@@ -52,6 +52,20 @@
   }
 }
 
+.parsed-html ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+.parsed-html ul {
+  list-style-position: inside;
+  list-style-type: disc;
+}
+
+.parsed-html a {
+  text-decoration: underline;
+  color: hsl(var(--primary));
+}
+
 @layer base {
   * {
     @apply border-border;

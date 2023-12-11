@@ -1,9 +1,9 @@
 'use client'
-import { useFetchReviewedArticles } from '@/api/hooks/articles/useFetchReviewedArticles'
+import { useFetchArticlesToReview } from '@/api/hooks/articles/useFetchArticlesToReview'
 import { ArticleThumbnail } from '@/components/features/article-thumbnail/article-thumbnail'
 
-export default function ArticlesPage() {
-  const { data } = useFetchReviewedArticles()
+export function ArticlesToReviewList() {
+  const { data } = useFetchArticlesToReview()
   if (!data) return <div>Error</div>
   return (
     <div className='grid grid-cols-4 gap-8 pt-14'>
