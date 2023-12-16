@@ -11,8 +11,8 @@ export type ArticleShort = {
 export type ArticleDetails = {
   created_at: string
   title: string
-  author: string
-  co_authors: string
+  author: string | null
+  co_authors: string | null
   discipline: string
   short_desc: string
   abstract: string

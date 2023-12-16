@@ -1,8 +1,10 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
+import type { ReviewToAdd } from '@/api/types/api.AddReview'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
 
-export async function GET() {
+export async function POST(req: NextRequest) {
   const supabase = createRouteSupa()
+  const body = (await req.json()) as ReviewToAdd
 
   const { data: userData } = await supabase.auth.getUser()
 
@@ -18,14 +20,21 @@ export async function GET() {
     return NextResponse.json({ message: 'Resource forbidden' }, { status: 403 })
   }
 
-  const { data, error } = await supabase
-    .from('articles')
-    .select('created_at, title, discipline, image_url, id')
-    .is('is_reviewed', false)
-    .order('created_at')
+  const { data, error } = await supabase.from('reviews').insert([
+    {
+      title: body.title,
+      author: body.author,
+      co_authors: body.coAuthors,
+      description: body.description,
+      uploader_id: userData.user.id,
+      review_url: body.reviewUrl,
+      article_id: body.articleId,
+    },
+  ])
 
-  if (error) return NextResponse.json({ message: error }, { status: 500 })
-  if (data?.length === 0) return NextResponse.json({ message: 'No articles found' }, { status: 404 })
+  if (error) {
+    return NextResponse.json({ message: error }, { status: 400 })
+  }
 
   return NextResponse.json({ data })
 }

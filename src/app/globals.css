@@ -66,6 +66,10 @@
   color: hsl(var(--primary));
 }
 
+.ql-editor {
+  min-height: 300px;
+}
+
 @layer base {
   * {
     @apply border-border;
