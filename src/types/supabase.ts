@@ -15,7 +15,9 @@ export interface Database {
           id: string
           image_url: string
           is_reviewed: boolean
+          last_review_date: string | null
           short_desc: string
+          times_opened: number | null
           title: string
           uploader_id: string
         }
@@ -30,7 +32,9 @@ export interface Database {
           id?: string
           image_url: string
           is_reviewed?: boolean
+          last_review_date?: string | null
           short_desc: string
+          times_opened?: number | null
           title: string
           uploader_id: string
         }
@@ -45,7 +49,9 @@ export interface Database {
           id?: string
           image_url?: string
           is_reviewed?: boolean
+          last_review_date?: string | null
           short_desc?: string
+          times_opened?: number | null
           title?: string
           uploader_id?: string
         }
@@ -184,7 +190,12 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_article_views: {
+        Args: {
+          uid: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

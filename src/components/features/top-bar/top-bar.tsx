@@ -33,7 +33,10 @@ export const TopBar = () => {
         title: 'Wylogwano poprawnie',
         description: 'Przekierowano na stronę główną',
       })
-      queryClient.invalidateQueries({ queryKey: ['usersDetails'] })
+      queryClient.invalidateQueries({ refetchType: 'all' })
+      queryClient.resetQueries()
+      queryClient.removeQueries()
+      queryClient.clear()
       router.push('/')
     }
   )

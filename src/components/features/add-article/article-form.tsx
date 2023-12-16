@@ -75,7 +75,7 @@ export const ArticleForm = () => {
   })
 
   const onSubmit = (values: FormSchema) => {
-    if (imageFile !== null || articleFile !== null || noDataArticleFile !== null) {
+    if (imageFile !== null && articleFile !== null && noDataArticleFile !== null) {
       if (quillValue) {
         mutate({
           ...values,
@@ -132,7 +132,7 @@ export const ArticleForm = () => {
                   name='author'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Autorzy</FormLabel>
+                      <FormLabel>Autor</FormLabel>
                       <FormControl>
                         <Input placeholder='Podaj głównego autora' {...field} />
                       </FormControl>

@@ -33,7 +33,10 @@ export const LoginForm = () => {
         duration: 5000,
         title: 'Zalogowano poprawnie',
       })
-      queryClient.invalidateQueries({ queryKey: ['usersDetails'] })
+      queryClient.invalidateQueries({ refetchType: 'all' })
+      queryClient.resetQueries()
+      queryClient.removeQueries()
+      queryClient.clear()
       router.push(appRouting.articles.default)
     }
   )
