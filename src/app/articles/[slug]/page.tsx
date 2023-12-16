@@ -10,7 +10,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     .eq('id', userData && userData.user && userData.user.id ? userData.user.id : '')
 
   return (
-    <div className='mx-6 pt-20'>
+    <div className='mx-6 py-20'>
       <ArticleDetails
         articleId={params.slug}
         canAddReview={
