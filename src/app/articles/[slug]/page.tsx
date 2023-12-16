@@ -9,6 +9,8 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     .select()
     .eq('id', userData && userData.user && userData.user.id ? userData.user.id : '')
 
+  await supabase.rpc('increment_article_views', { uid: params.slug })
+
   return (
     <div className='mx-6 py-20'>
       <ArticleDetails

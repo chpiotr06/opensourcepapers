@@ -80,30 +80,32 @@ export const ArticleDetails = ({ articleId, canAddReview }: { articleId: string;
           </Typography>
         </CardContent>
       </Card>
-      <Card className='mt-6 max-w-5xl'>
-        <CardHeader>
-          <Typography variant='h2-20-500'>Recenzje</Typography>
-        </CardHeader>
-        <CardContent className='flex flex-col gap-8'>
-          {reviews?.data.map((review) => (
-            <div key={review.id} className='flex flex-col gap-2'>
-              <Typography variant='h2-20-500'>{review.title}</Typography>
-              <Typography variant='h2-20-500'>
-                {review.co_authors ? `${review.author} oraz ${review.co_authors}` : review.author}
-              </Typography>
-              <Typography variant='h3-16-500'>{review.description}</Typography>
-              <a
-                href={`${process.env.NEXT_PUBLIC_PUBLIC_BUCKET_BASE}${review.review_url}`}
-                target='_blank'
-                rel='noreferrer'
-                className='w-fit'
-              >
-                <Button>Pobierz Recenzję</Button>
-              </a>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+      {reviews && reviews?.data.length > 0 && (
+        <Card className='mt-6 max-w-5xl'>
+          <CardHeader>
+            <Typography variant='h2-20-500'>Recenzje</Typography>
+          </CardHeader>
+          <CardContent className='flex flex-col gap-8'>
+            {reviews?.data.map((review) => (
+              <div key={review.id} className='flex flex-col gap-2'>
+                <Typography variant='h2-20-500'>{review.title}</Typography>
+                <Typography variant='h2-20-500'>
+                  {review.co_authors ? `${review.author} oraz ${review.co_authors}` : review.author}
+                </Typography>
+                <Typography variant='h3-16-500'>{review.description}</Typography>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_PUBLIC_BUCKET_BASE}${review.review_url}`}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='w-fit'
+                >
+                  <Button>Pobierz Recenzję</Button>
+                </a>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

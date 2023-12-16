@@ -2,9 +2,9 @@ import { useQuery, type QueryClient } from '@tanstack/react-query'
 import { API, endpoints } from '@/api/endpoints'
 import type { ArticleShortResponse } from '@/api/types/api.Articles'
 
-export const fetchReviewedArticles = async (): Promise<ArticleShortResponse> => {
+export const fetchReviewedArticles = async (filtersQuery?: string): Promise<ArticleShortResponse> => {
   try {
-    const url = new URL(`${API}${endpoints.articles.getReviewedArticle}`)
+    const url = new URL(`${API}${endpoints.articles.getReviewedArticle}${filtersQuery ? `?${filtersQuery}` : ''}`)
 
     const response = await fetch(url.toString())
 
@@ -24,10 +24,10 @@ export const prefetchReviewedArticles = async (queryClient: QueryClient) => {
   await queryClient.prefetchQuery({ queryKey: ['reviewedArticles'], queryFn: () => fetchReviewedArticles() })
 }
 
-export const useFetchReviewedArticles = () => {
+export const useFetchReviewedArticles = (filtersQuery?: string) => {
   const { data, isError, error, refetch } = useQuery<ArticleShortResponse, Error>({
-    queryKey: ['reviewedArticles'],
-    queryFn: () => fetchReviewedArticles(),
+    queryKey: ['reviewedArticles', filtersQuery],
+    queryFn: () => fetchReviewedArticles(filtersQuery),
     refetchOnWindowFocus: false,
     staleTime: 300_000,
   })

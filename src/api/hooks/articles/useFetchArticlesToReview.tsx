@@ -24,12 +24,13 @@ export const prefetchArticlesToReview = async (queryClient: QueryClient) => {
   await queryClient.prefetchQuery({ queryKey: ['articlesToReview'], queryFn: () => fetchArticlesToReview() })
 }
 
-export const useFetchArticlesToReview = () => {
+export const useFetchArticlesToReview = (isDisabled?: boolean) => {
   const { data, isError, error, refetch } = useQuery<ArticleShortResponse, Error>({
     queryKey: ['articlesToReview'],
     queryFn: () => fetchArticlesToReview(),
     refetchOnWindowFocus: false,
     staleTime: 300_000,
+    enabled: !isDisabled,
   })
   return {
     data,
