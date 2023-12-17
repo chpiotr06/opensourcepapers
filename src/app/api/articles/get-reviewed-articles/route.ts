@@ -2,32 +2,30 @@ import { NextResponse } from 'next/server'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
 import type { NextRequest } from 'next/server'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- supabase internal runtime type
-const buildEntry = (key: string, value: string, supabaseQuery: any) => {
-  switch (key) {
-    case 'order_by':
-      supabaseQuery.order(value, { ascending: false })
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- supabase internal runtime type
-const buildFilters = (supabaseQuery: any, searchParams: URLSearchParams) => {
-  const entries = searchParams.entries()
-  for (const [key, value] of entries) {
-    buildEntry(key, value, supabaseQuery)
-  }
-}
-
 export async function GET(request: NextRequest) {
   const supabase = createRouteSupa()
   const searchParams = request.nextUrl.searchParams
+  const params = {
+    title: searchParams.get('title'),
+    author: searchParams.get('author'),
+    coAuthors: searchParams.get('co_authors'),
+    discipline: searchParams.get('discipline'),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- supabase internal runtime type
+    orderBy: searchParams.get('order_by') as any,
+    limit: searchParams.get('limit'),
+  }
 
   const supabaseQuery = supabase
     .from('articles')
     .select('created_at, title, author, co_authors, discipline, image_url, id')
-    .is('is_reviewed', true)
 
-  buildFilters(supabaseQuery, searchParams)
+  if (params.title) supabaseQuery.ilike('title', `%${params.title}%`)
+  if (params.author) supabaseQuery.ilike('author', `%${params.author}%`)
+  if (params.coAuthors) supabaseQuery.ilike('co_authors', `%${params.coAuthors}%`)
+  if (params.discipline) supabaseQuery.ilike('discipline', `%${params.discipline}%`)
+  supabaseQuery.is('is_reviewed', true)
+  if (params.orderBy) supabaseQuery.order(params.orderBy, { ascending: false })
+  if (params.limit) supabaseQuery.limit(parseInt(params.limit))
 
   const { data, error } = await supabaseQuery
 

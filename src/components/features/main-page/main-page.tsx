@@ -6,8 +6,8 @@ import { ArticlesGrid } from '@/components/features/main-page/articles-grid'
 import { Typography } from '@/components/ui/typography'
 
 export const MainPage = ({ canSeeToReview }: { canSeeToReview: boolean }) => {
-  const { data: newArticles } = useFetchReviewedArticles('order_by=created_at')
-  const { data: sugestedArticles } = useFetchReviewedArticles('order_by=times_opened')
+  const { data: newArticles } = useFetchReviewedArticles('order_by=created_at&limit=10')
+  const { data: sugestedArticles } = useFetchReviewedArticles('order_by=times_opened&limit=10')
   const { data: articlesToReview } = useFetchArticlesToReview(!canSeeToReview)
 
   return (
