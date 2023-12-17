@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
+import type { NextRequest } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const supabase = createRouteSupa()
+  const searchParams = request.nextUrl.searchParams
+  const params = {
+    title: searchParams.get('title'),
+    discipline: searchParams.get('discipline'),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- supabase internal runtime type
+    orderBy: searchParams.get('order_by') as any,
+    limit: searchParams.get('limit'),
+  }
 
   const { data: userData } = await supabase.auth.getUser()
 
@@ -18,11 +27,22 @@ export async function GET() {
     return NextResponse.json({ message: 'Resource forbidden' }, { status: 403 })
   }
 
-  const { data, error } = await supabase
+  const supabaseQuery = supabase
     .from('articles')
     .select('created_at, title, discipline, image_url, id')
-    .is('is_reviewed', false)
     .order('created_at')
+
+  if (params.title) supabaseQuery.ilike('title', `%${params.title}%`)
+  if (params.discipline) supabaseQuery.ilike('discipline', `%${params.discipline}%`)
+  supabaseQuery.is('is_reviewed', false)
+  if (params.orderBy) {
+    supabaseQuery.order(params.orderBy, { ascending: false })
+  } else {
+    supabaseQuery.order('created_at')
+  }
+  if (params.limit) supabaseQuery.limit(parseInt(params.limit))
+
+  const { data, error } = await supabaseQuery
 
   if (error) return NextResponse.json({ message: error }, { status: 500 })
   if (data?.length === 0) return NextResponse.json({ message: 'No articles found' }, { status: 404 })

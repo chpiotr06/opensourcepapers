@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { ArticlesToReviewList } from '@/components/features/articles-to-review-list/articles-to-review-list'
+import { ArticlesToReviewPage } from '@/components/features/articles-to-review-list/articles-to-review-page'
 import { appRouting } from '@/lib/app-routing'
 import { createRouteSupa } from '@/lib/supabase/routeHandlerClient'
 
@@ -13,8 +13,8 @@ export default async function ToReviewPage() {
     redirect(appRouting.articles.default)
 
   return (
-    <div>
-      <ArticlesToReviewList />
+    <div className='py-20'>
+      <ArticlesToReviewPage />
     </div>
   )
 }

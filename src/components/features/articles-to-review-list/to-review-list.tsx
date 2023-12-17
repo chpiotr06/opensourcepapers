@@ -1,12 +1,15 @@
 'use client'
+import { useSearchParams } from 'next/navigation'
 import { useFetchArticlesToReview } from '@/api/hooks/articles/useFetchArticlesToReview'
 import { ArticleThumbnail } from '@/components/features/article-thumbnail/article-thumbnail'
 
-export function ArticlesToReviewList() {
-  const { data } = useFetchArticlesToReview()
+export const ArticlesToReviewList = () => {
+  const searchParams = useSearchParams()
+  const { data } = useFetchArticlesToReview(searchParams.toString())
   if (!data) return <div>Error</div>
+
   return (
-    <div className='grid grid-cols-4 gap-8 pt-14'>
+    <div className='flex h-fit flex-wrap justify-center gap-8 sm:justify-start'>
       {data.data.map((article) => (
         <ArticleThumbnail key={article.id} article={article} />
       ))}

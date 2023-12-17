@@ -8,7 +8,7 @@ export const ArticlesList = () => {
   if (!data) return <div>Error</div>
 
   return (
-    <div className='flex h-fit flex-wrap gap-8'>
+    <div className='flex h-fit flex-wrap justify-center gap-8 sm:justify-start'>
       {data.data.map((article) => (
         <ArticleThumbnail key={article.id} article={article} />
       ))}
