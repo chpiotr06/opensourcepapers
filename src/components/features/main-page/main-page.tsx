@@ -8,7 +8,7 @@ import { Typography } from '@/components/ui/typography'
 export const MainPage = ({ canSeeToReview }: { canSeeToReview: boolean }) => {
   const { data: newArticles } = useFetchReviewedArticles('order_by=created_at&limit=10')
   const { data: sugestedArticles } = useFetchReviewedArticles('order_by=times_opened&limit=10')
-  const { data: articlesToReview } = useFetchArticlesToReview(!canSeeToReview)
+  const { data: articlesToReview } = useFetchArticlesToReview(undefined, !canSeeToReview)
 
   return (
     <div className='flex flex-col gap-6'>

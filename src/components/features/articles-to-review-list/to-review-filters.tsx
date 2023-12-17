@@ -1,3 +1,4 @@
+'use client'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
@@ -7,13 +8,11 @@ import { Label } from '@/components/ui/label'
 import { Typography } from '@/components/ui/typography'
 import { useQueryParams } from '@/lib/hooks/useQueryParams'
 
-export const ArticlesFilters = () => {
+export const ArticlesToReviewFilters = () => {
   const searchParams = useSearchParams()
   const { mutateQueryParams } = useQueryParams()
   const [filters, setFilters] = useState(() => ({
     title: searchParams.get('title') || '',
-    author: searchParams.get('author') || '',
-    co_authors: searchParams.get('co_authors') || '',
     discipline: searchParams.get('discipline') || '',
   }))
 
@@ -28,18 +27,6 @@ export const ArticlesFilters = () => {
           id='title'
           value={filters['title']}
           onChange={(event) => setFilters((state) => ({ ...state, title: event.target.value }))}
-        />
-        <Label htmlFor='author'>Autor</Label>
-        <Input
-          id='author'
-          value={filters['author']}
-          onChange={(event) => setFilters((state) => ({ ...state, author: event.target.value }))}
-        />
-        <Label htmlFor='coAuthors'>Współautorzy</Label>
-        <Input
-          id='coAuthors'
-          value={filters['co_authors']}
-          onChange={(event) => setFilters((state) => ({ ...state, co_authors: event.target.value }))}
         />
         <Label htmlFor='discipline'>Dyscyplina naukowa</Label>
         <Input
