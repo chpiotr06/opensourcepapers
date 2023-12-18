@@ -25,7 +25,7 @@ export const prefetchUsersToVerify = async (queryClient: QueryClient) => {
 }
 
 export const useFetchUsersToVerify = () => {
-  const { data, isError, error, refetch } = useQuery<UsersToVerifyResponse, Error>({
+  const { data, isError, error, refetch, isPending } = useQuery<UsersToVerifyResponse, Error>({
     queryKey: ['usersToVerify'],
     queryFn: () => fetchUsersToVerify(),
     refetchOnWindowFocus: false,
@@ -35,5 +35,6 @@ export const useFetchUsersToVerify = () => {
     isError,
     error,
     refetch,
+    isPending,
   }
 }

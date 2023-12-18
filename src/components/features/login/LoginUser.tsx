@@ -9,7 +9,7 @@ import { appRouting } from '@/lib/app-routing'
 
 export const LoginUser = () => (
   <div className='flex flex-col items-center gap-3'>
-    <Card className='h-fit w-96'>
+    <Card className='h-fit w-screen max-w-[24rem]'>
       <CardHeader>
         <CardTitle>Zaloguj się</CardTitle>
       </CardHeader>

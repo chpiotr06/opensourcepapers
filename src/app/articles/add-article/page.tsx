@@ -15,7 +15,7 @@ export default async function AddArticlePage() {
     redirect(appRouting.articles.default)
 
   return (
-    <div className='mx-6 pt-14'>
+    <div className='mx-6 py-14'>
       <Typography variant='h1-30-500' className='my-6'>
         Dodaj Pracę
       </Typography>
