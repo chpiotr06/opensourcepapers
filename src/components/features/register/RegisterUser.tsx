@@ -9,7 +9,7 @@ import { appRouting } from '@/lib/app-routing'
 
 export const RegisterUser = () => (
   <div className='flex flex-col items-center gap-3'>
-    <Card className='h-fit w-96'>
+    <Card className=' h-fit w-screen max-w-[30rem]'>
       <CardHeader>
         <CardTitle>Zarejestruj się</CardTitle>
       </CardHeader>
@@ -17,13 +17,13 @@ export const RegisterUser = () => (
         <RegisterForm />
       </CardContent>
     </Card>
-    <Typography variant='p-14-400'>
+    <Typography variant='p-14-400' className='text-center'>
       Masz już konto?
       <Button variant='link'>
         <Link href={appRouting.login}>Zaloguj się</Link>
       </Button>
     </Typography>
-    <Typography variant='p-14-400'>
+    <Typography variant='p-14-400' className='text-center'>
       Jesteś Pracownikiem Naukowym?
       <Button variant='link'>
         <Link href={appRouting.scientificRegister}>Załóż konto Pracownika Naukowego.</Link>

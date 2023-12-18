@@ -2,9 +2,9 @@ import { useQuery, type QueryClient } from '@tanstack/react-query'
 import { API, endpoints } from '@/api/endpoints'
 import type { ArticleShortResponse } from '@/api/types/api.Articles'
 
-export const fetchArticlesToReview = async (): Promise<ArticleShortResponse> => {
+export const fetchArticlesToReview = async (filtersQuery?: string): Promise<ArticleShortResponse> => {
   try {
-    const url = new URL(`${API}${endpoints.articles.getArticlesToReview}`)
+    const url = new URL(`${API}${endpoints.articles.getArticlesToReview}${filtersQuery ? `?${filtersQuery}` : ''}`)
 
     const response = await fetch(url.toString())
 
@@ -24,10 +24,10 @@ export const prefetchArticlesToReview = async (queryClient: QueryClient) => {
   await queryClient.prefetchQuery({ queryKey: ['articlesToReview'], queryFn: () => fetchArticlesToReview() })
 }
 
-export const useFetchArticlesToReview = (isDisabled?: boolean) => {
-  const { data, isError, error, refetch } = useQuery<ArticleShortResponse, Error>({
-    queryKey: ['articlesToReview'],
-    queryFn: () => fetchArticlesToReview(),
+export const useFetchArticlesToReview = (filtersQuery?: string, isDisabled?: boolean) => {
+  const { data, isError, error, refetch, isPending } = useQuery<ArticleShortResponse, Error>({
+    queryKey: ['articlesToReview', filtersQuery],
+    queryFn: () => fetchArticlesToReview(filtersQuery),
     refetchOnWindowFocus: false,
     staleTime: 300_000,
     enabled: !isDisabled,
@@ -37,5 +37,6 @@ export const useFetchArticlesToReview = (isDisabled?: boolean) => {
     isError,
     error,
     refetch,
+    isPending,
   }
 }

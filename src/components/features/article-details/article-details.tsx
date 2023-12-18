@@ -4,17 +4,33 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useFetchArticleReviews } from '@/api/hooks/articles/useFetchArticleReviews'
 import { useFetchArticleDetails } from '@/api/hooks/articles/useFetchArticlesDetails'
+import { ArticleDetailsSkeleton } from '@/components/features/article-details/article-details-skeleton'
+import { ErrorMessage } from '@/components/features/error-message/error-message'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 import { appRouting } from '@/lib/app-routing'
 
 export const ArticleDetails = ({ articleId, canAddReview }: { articleId: string; canAddReview: boolean }) => {
-  const { data } = useFetchArticleDetails(articleId)
+  const { data, isError, isPending } = useFetchArticleDetails(articleId)
   const { data: reviews } = useFetchArticleReviews(articleId)
 
-  if (!data) return <div>Error</div>
-  if (data.data.length === 0) return <div>Error</div>
+  if (isPending) return <ArticleDetailsSkeleton />
+
+  if (!data || isError)
+    return (
+      <ErrorMessage
+        title='Błąd sieci'
+        description='Nie udało się pobrać prac naukowych. Odśwież stronę i spróbuj jeszcze raz.'
+      />
+    )
+  if (data.data.length === 0)
+    return (
+      <ErrorMessage
+        title='Błąd sieci'
+        description='Nie udało się pobrać prac naukowych. Odśwież stronę i spróbuj jeszcze raz.'
+      />
+    )
 
   const article = data.data[0]
 
@@ -54,14 +70,25 @@ export const ArticleDetails = ({ articleId, canAddReview }: { articleId: string;
             </Typography>
           )}
           <div className='flex gap-4'>
-            <a
-              href={`${process.env.NEXT_PUBLIC_PUBLIC_BUCKET_BASE}${article.article_url}`}
-              target='_blank'
-              rel='noreferrer'
-              className='w-fit'
-            >
-              <Button>Pobierz pracę naukową</Button>
-            </a>
+            {article.is_reviewed ? (
+              <a
+                href={`${process.env.NEXT_PUBLIC_PUBLIC_BUCKET_BASE}${article.article_url}`}
+                target='_blank'
+                rel='noreferrer'
+                className='w-fit'
+              >
+                <Button>Pobierz pracę naukową</Button>
+              </a>
+            ) : (
+              <a
+                href={`${process.env.NEXT_PUBLIC_PUBLIC_BUCKET_BASE}${article.article_no_personal_url}`}
+                target='_blank'
+                rel='noreferrer'
+                className='w-fit'
+              >
+                <Button>Pobierz pracę naukową</Button>
+              </a>
+            )}
             {canAddReview && (
               <Link href={appRouting.articles.addReview(article.id)}>
                 <Button variant='destructive'>Dodaj Recenzję</Button>

@@ -160,7 +160,7 @@ export const ArticleForm = () => {
                     <FormItem>
                       <FormLabel>Dyscyplina naukowa</FormLabel>
                       <FormControl>
-                        <Input placeholder='Podaj dyscypline' {...field} />
+                        <Input placeholder='Podaj dyscyplinę' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -173,7 +173,7 @@ export const ArticleForm = () => {
                     <FormItem>
                       <FormLabel>Krótki opis</FormLabel>
                       <FormControl>
-                        <Textarea className='min-h-[8rem]' placeholder='Podaj tytuł' {...field} />
+                        <Textarea className='min-h-[8rem]' placeholder='Podaj krótki opis pracy' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
