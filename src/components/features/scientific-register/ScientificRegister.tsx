@@ -8,8 +8,8 @@ import { Typography } from '@/components/ui/typography'
 import { appRouting } from '@/lib/app-routing'
 
 export const ScientificRegister = () => (
-  <div className='flex flex-col items-center gap-3'>
-    <Card className='h-fit w-[40rem]'>
+  <div className='flex flex-col items-center gap-3 '>
+    <Card className='h-fit w-screen sm:w-[40rem]'>
       <CardHeader>
         <CardTitle>Zarejestruj się jako Pracownik Naukowy</CardTitle>
       </CardHeader>
@@ -17,13 +17,13 @@ export const ScientificRegister = () => (
         <ScientificRegisterForm />
       </CardContent>
     </Card>
-    <Typography variant='p-14-400'>
+    <Typography variant='p-14-400' className='text-center'>
       Masz już konto?
       <Button variant='link'>
         <Link href={appRouting.login}>Zaloguj się</Link>
       </Button>
     </Typography>
-    <Typography variant='p-14-400'>
+    <Typography variant='p-14-400' className='text-center'>
       Nie potrzebujesz konta naukowego?
       <Button variant='link'>
         <Link href={appRouting.scientificRegister}>Załóż konto Użytkownika.</Link>

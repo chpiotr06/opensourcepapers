@@ -25,7 +25,7 @@ export const prefetchArticlesToReview = async (queryClient: QueryClient) => {
 }
 
 export const useFetchArticlesToReview = (filtersQuery?: string, isDisabled?: boolean) => {
-  const { data, isError, error, refetch } = useQuery<ArticleShortResponse, Error>({
+  const { data, isError, error, refetch, isPending } = useQuery<ArticleShortResponse, Error>({
     queryKey: ['articlesToReview', filtersQuery],
     queryFn: () => fetchArticlesToReview(filtersQuery),
     refetchOnWindowFocus: false,
@@ -37,5 +37,6 @@ export const useFetchArticlesToReview = (filtersQuery?: string, isDisabled?: boo
     isError,
     error,
     refetch,
+    isPending,
   }
 }

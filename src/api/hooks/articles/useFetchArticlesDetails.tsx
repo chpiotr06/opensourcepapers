@@ -28,7 +28,7 @@ export const prefetchArticleDetails = async (queryClient: QueryClient, articleId
 }
 
 export const useFetchArticleDetails = (articleId: string) => {
-  const { data, isError, error, refetch } = useQuery<ArticleDetailsResponse, Error>({
+  const { data, isError, error, refetch, isPending } = useQuery<ArticleDetailsResponse, Error>({
     queryKey: ['articleDetails', articleId],
     queryFn: () => fetchArticleDetails(articleId),
     refetchOnWindowFocus: false,
@@ -39,5 +39,6 @@ export const useFetchArticleDetails = (articleId: string) => {
     isError,
     error,
     refetch,
+    isPending,
   }
 }
