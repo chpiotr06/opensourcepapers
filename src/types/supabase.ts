@@ -165,6 +165,7 @@ export interface Database {
           id: string
           institution: string
           is_verified: boolean
+          profile_id: string
           scientific_discipline: string
         }
         Insert: {
@@ -173,6 +174,7 @@ export interface Database {
           id?: string
           institution: string
           is_verified?: boolean
+          profile_id: string
           scientific_discipline: string
         }
         Update: {
@@ -181,9 +183,18 @@ export interface Database {
           id?: string
           institution?: string
           is_verified?: boolean
+          profile_id?: string
           scientific_discipline?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'scientific_profiles_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Views: {
