@@ -17,6 +17,10 @@ export async function POST(request: Request, { params }: { params: { user: strin
     return NextResponse.json({ message: 'Resource forbidden' }, { status: 403 })
   }
 
+  const { data: spUserData, error: spError } = await supabase.from('scientific_profiles').select().eq('id', userId)
+
+  if (spError) return NextResponse.json({ message: spError }, { status: 500 })
+
   const { data, error: errorOne } = await supabase
     .from('scientific_profiles')
     .update({ is_verified: true })
@@ -27,7 +31,7 @@ export async function POST(request: Request, { params }: { params: { user: strin
   const { error: errorTwo } = await supabase
     .from('profiles')
     .update({ role: 'scientist' })
-    .eq('id', userData.user.id)
+    .eq('id', spUserData[0].profile_id)
     .select()
   if (errorTwo) return NextResponse.json({ message: errorTwo }, { status: 500 })
 
