@@ -24,7 +24,7 @@ export async function POST(request: Request, { params }: { params: { user: strin
     .select()
   if (errorOne) return NextResponse.json({ message: errorOne }, { status: 500 })
 
-const { error: errorTwo } = await supabase
+  const { error: errorTwo } = await supabase
     .from('profiles')
     .update({ role: 'scientist' })
     .eq('id', userData.user.id)
