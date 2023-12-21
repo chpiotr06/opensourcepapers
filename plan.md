@@ -15,5 +15,7 @@
    4.9 visual studio code
 5. Realizacja pracy czesc I - projekt
 6. Realizacja pracy część II - interfejs programowania aplikacji
+   6.1 Baza danych
+   6.2 API
 7. Realizacja pracy czesc III - interfejs użytkownika
 8. Podsumowanie i wnioski
